@@ -1,0 +1,33 @@
+version: "3"
+
+services:
+  neo4j:
+    image: bitnami/neo4j:$NEO4J_TAG
+    container_name: "${PROJECT_NAME}_neo4j"
+    volumes: 
+      - graph-data:/bitnami
+    ports:
+      # - '7474:7474'
+      # - '7473:7473'
+      - '7687:7687'
+    environment:
+      NEO4J_PASSWORD: $NEO4J_PASSWORD
+      # NEO4J_HOST: $NEO4J_HOST
+      NEO4J_BOLT_PORT_NUMBER: $NEO4J_BOLT_PORT_NUMBER
+      NEO4J_HTTP_PORT_NUMBER: $NEO4J_HTTP_PORT_NUMBER
+      NEO4J_HTTPS_PORT_NUMBER: $NEO4J_HTTPS_PORT_NUMBER
+    networks:
+      - neo4j-network
+      # - graph
+
+
+volumes:
+# Docker-sync for macOS users
+#  docker-sync:
+#    external: true
+  graph-data:
+   
+networks:
+  neo4j-network:
+    external: true
+  # graph:
