@@ -1,4 +1,4 @@
-# National Leadership Centre Alpha Knowledge Graph: Neo4j
+# National Leadership Centre Knowledge Graph: Neo4j
 
 This is a project for the National Leadership Centre to run a [Neo4j](https://neo4j.com/) graph database in Docker containers.
 
