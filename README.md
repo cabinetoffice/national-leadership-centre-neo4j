@@ -31,6 +31,13 @@ $ make up
 $ make down
 ```
 
+Once booted, you should have:
+
+- a Neo4j instance running
+- an Nginx container running a simple static HTML page with [Neovis.js](https://github.com/neo4j-contrib/neovis.js)
+
+You will need to make changes to the `index.html` file so that Neovis.js can connect to your Neo4j instance.
+
 #### Make commands
 
 The project comes with several handy make commands.
