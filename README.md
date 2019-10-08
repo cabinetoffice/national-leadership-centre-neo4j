@@ -4,6 +4,10 @@ This is a project for the National Leadership Centre to run a [Neo4j](https://ne
 
 # Usage
 
+## Requirements
+
+This project assumes you already have Traefik running on a container in an external network called `traefik`.
+
 ## Getting started
 
 ### Installation and configuration
@@ -27,7 +31,16 @@ $ make up
 $ make down
 ```
 
-#### Make commands:
+Once booted, you should have:
+
+- a Neo4j instance running
+- an Nginx container running a simple static HTML page with [Neovis.js](https://github.com/neo4j-contrib/neovis.js)
+
+You will need to make changes to the `index.html` file so that Neovis.js can connect to your Neo4j instance.
+
+#### Make commands
+
+The project comes with several handy make commands.
 
 Usage:
 
