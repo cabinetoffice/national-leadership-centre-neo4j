@@ -4,6 +4,10 @@ This is a project for the National Leadership Centre to run a [Neo4j](https://ne
 
 # Usage
 
+## Requirements
+
+This project assumes you already have Traefik running on a container in an external network called `traefik`.
+
 ## Getting started
 
 ### Installation and configuration
@@ -27,7 +31,9 @@ $ make up
 $ make down
 ```
 
-#### Make commands:
+#### Make commands
+
+The project comes with several handy make commands.
 
 Usage:
 

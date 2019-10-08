@@ -18,7 +18,25 @@ services:
       NEO4J_HTTPS_PORT_NUMBER: $NEO4J_HTTPS_PORT_NUMBER
     networks:
       - neo4j-network
-      # - graph
+      - graph
+  nginx:
+    image: wodby/nginx:$NGINX_TAG
+    container_name: "${PROJECT_NAME}_nginx"
+    environment:
+      NGINX_VHOST_PRESET: html
+      NGINX_INDEX_FILE: index.html
+      NGINX_ERROR_LOG_LEVEL: debug
+      NGINX_SERVER_ROOT: "${NGINX_SERVER_ROOT}"
+    volumes:
+      - ./:/var/www/html:cached
+    labels:
+      - 'traefik.backend=nginx'
+      - 'traefik.port=$PUBLIC_PORT'
+      - 'traefik.frontend.rule=Host:${PROJECT_BASE_URL}'
+      - 'traefik.docker.network=traefik'
+    networks:
+      - graph
+      - traefik
 
 
 volumes:
@@ -28,6 +46,8 @@ volumes:
   graph-data:
    
 networks:
+  traefik:
+    external: true
   neo4j-network:
     external: true
-  # graph:
+  graph:
