@@ -2,23 +2,30 @@ version: "3"
 
 services:
   neo4j:
-    image: bitnami/neo4j:$NEO4J_TAG
+    image: convivio/neo4j:$NEO4J_TAG
     container_name: "${PROJECT_NAME}_neo4j"
     volumes: 
-      - graph-data:/bitnami
+      - graph-data:/data
     ports:
       # - '7474:7474'
       # - '7473:7473'
       - '7687:7687'
     environment:
       NEO4J_PASSWORD: $NEO4J_PASSWORD
-      # NEO4J_HOST: $NEO4J_HOST
-      NEO4J_BOLT_PORT_NUMBER: $NEO4J_BOLT_PORT_NUMBER
-      NEO4J_HTTP_PORT_NUMBER: $NEO4J_HTTP_PORT_NUMBER
-      NEO4J_HTTPS_PORT_NUMBER: $NEO4J_HTTPS_PORT_NUMBER
+      NEO4J_HOST: $NEO4J_HOST
+      # NEO4J_BOLT_PORT_NUMBER: $NEO4J_BOLT_PORT_NUMBER
+      # NEO4J_HTTP_PORT_NUMBER: $NEO4J_HTTP_PORT_NUMBER
+      # NEO4J_HTTPS_PORT_NUMBER: $NEO4J_HTTPS_PORT_NUMBER
     networks:
       - neo4j-network
       - graph
+      - traefik
+    labels:
+      - 'traefik.backend=neo4j'
+      - 'traefik.port=$NEO4J_HTTP_PORT_NUMBER'
+      - 'traefik.frontend.rule=Host:${PROJECT_BASE_URL}'
+      - 'traefik.docker.network=traefik'
+
   nginx:
     image: wodby/nginx:$NGINX_TAG
     container_name: "${PROJECT_NAME}_nginx"
