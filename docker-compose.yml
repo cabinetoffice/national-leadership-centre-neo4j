@@ -7,11 +7,11 @@ services:
     volumes: 
       - graph-data:/data
     ports:
-      # - '7474:7474'
+      - '7474:7474'
       # - '7473:7473'
       - '7687:7687'
     environment:
-      NEO4J_PASSWORD: $NEO4J_PASSWORD
+      NEO4J_AUTH: neo4j/$NEO4J_PASSWORD
       NEO4J_HOST: $NEO4J_HOST
       # NEO4J_BOLT_PORT_NUMBER: $NEO4J_BOLT_PORT_NUMBER
       # NEO4J_HTTP_PORT_NUMBER: $NEO4J_HTTP_PORT_NUMBER
@@ -44,6 +44,22 @@ services:
     networks:
       - graph
       - traefik
+  
+  api:
+    build: ./api
+    container_name: "${PROJECT_NAME}_api"
+    ports:
+      - 4001:4001
+    environment:
+      - NEO4J_URI=bolt://${PROJECT_BASE_URL}:${NEO4J_BOLT_PORT_NUMBER}
+      - NEO4J_USER=neo4j
+      - NEO4J_PASSWORD=$NEO4J_PASSWORD
+      - GRAPHQL_LISTEN_PORT=4001
+      - GRAPHQL_URI=http://${PROJECT_NAME}_api:4001/graphql  
+    links:
+    - neo4j
+    depends_on:
+    - neo4j
 
 
 volumes:
