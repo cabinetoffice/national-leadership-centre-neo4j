@@ -6,13 +6,19 @@ services:
     container_name: "${PROJECT_NAME}_neo4j"
     volumes: 
       - graph-data:/data
+      - graph-logs:/logs
+      - ./neo4j/import:/import
     ports:
-      # - '7474:7474'
+      - '7474:7474'
       # - '7473:7473'
       - '7687:7687'
     environment:
-      NEO4J_PASSWORD: $NEO4J_PASSWORD
-      NEO4J_HOST: $NEO4J_HOST
+      - NEO4J_AUTH=neo4j/$NEO4J_PASSWORD
+      - NEO4J_HOST=$NEO4J_HOST
+      - NEO4J_dbms_security_procedures_unrestricted=apoc.*
+      - NEO4J_apoc_import_file_enabled=true
+      - NEO4J_apoc_export_file_enabled=true
+      - NEO4J_dbms_shell_enabled=true
       # NEO4J_BOLT_PORT_NUMBER: $NEO4J_BOLT_PORT_NUMBER
       # NEO4J_HTTP_PORT_NUMBER: $NEO4J_HTTP_PORT_NUMBER
       # NEO4J_HTTPS_PORT_NUMBER: $NEO4J_HTTPS_PORT_NUMBER
@@ -41,6 +47,30 @@ services:
       - 'traefik.port=$PUBLIC_PORT'
       - 'traefik.frontend.rule=Host:${PROJECT_BASE_URL}'
       - 'traefik.docker.network=traefik'
+    depends_on:
+      - neo4j
+    networks:
+      - graph
+      - traefik
+  
+  api:
+    build: ./api
+    container_name: "${PROJECT_NAME}_api"
+    ports:
+      - 4001:4001
+    environment:
+      - NEO4J_URI=bolt://${PROJECT_NAME}_neo4j:${NEO4J_BOLT_PORT_NUMBER}
+      - NEO4J_USER=neo4j
+      - NEO4J_PASSWORD=${NEO4J_PASSWORD}
+      - GRAPHQL_LISTEN_PORT=${GRAPHQL_LISTEN_PORT}
+      - GRAPHQL_URI=http://${PROJECT_NAME}_api:4001/graphql
+    labels:
+      - 'traefik.backend=api'
+      - 'traefik.port=${GRAPHQL_LISTEN_PORT}'
+      - 'traefik.frontend.rule=Host:api.${PROJECT_BASE_URL}'
+      - 'traefik.docker.network=traefik'
+    depends_on:
+      - neo4j
     networks:
       - graph
       - traefik
@@ -51,6 +81,7 @@ volumes:
 #  docker-sync:
 #    external: true
   graph-data:
+  graph-logs:
    
 networks:
   traefik:

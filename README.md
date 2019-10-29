@@ -6,7 +6,15 @@ This is a project for the National Leadership Centre to run a [Neo4j](https://ne
 
 ## Requirements
 
-This project assumes you already have Traefik running on a container in an external network called `traefik`.
+This project assumes you already have [Traefik](https://traefik.io/) running on a container in an external network called `traefik`. 
+
+To create a Docker external network called `traefik`:
+
+```bash
+$ docker network create traefik
+```
+
+A project like [joesb/docker-portainer-traefik](https://github.com/joesb/docker-portainer-traefik) may be a good way to run a Traefik (and [Portainer](https://www.portainer.io/)) instance on that external network.
 
 ## Getting started
 
