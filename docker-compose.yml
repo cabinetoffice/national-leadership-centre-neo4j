@@ -58,6 +58,8 @@ services:
     container_name: "${PROJECT_NAME}_api"
     ports:
       - 4001:4001
+    volumes:
+        - ./api:/app/
     environment:
       - NEO4J_URI=bolt://${PROJECT_NAME}_neo4j:${NEO4J_BOLT_PORT_NUMBER}
       - NEO4J_USER=neo4j
