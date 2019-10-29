@@ -14,19 +14,38 @@
                     server_user: "neo4j",
                     server_password: "neo4j",
                     labels: {
-                        "Character": {
-                            "caption": "name",
-                            "size": "pagerank",
-                            "community": "community"
+                        "Organisation": {
+                            "caption": "name"
+                        },
+                        "Team" : {
+                            "caption": "name"
+                        },
+                        "DataProductService": {
+                            "caption": "name"
+                        },
+                        "UnderlyingDataset": {
+                            "caption": "name"
                         }
                     },
                     relationships: {
-                        "INTERACTS": {
-                            "thickness": "weight",
-                            "caption": false
+                        "RUNS": {
+                            "thickness": "count",
+                            "caption": true
+                        },
+                        "BASED_ON": {
+                            "thickness": "count",
+                            "caption": true
+                        },
+                        "PRODUCED_BY": {
+                            "thickness": "count",
+                            "caption": true
+                        },
+                        "SITS_WITHIN": {
+                            "thickness": "count",
+                            "caption": true
                         }
                     },
-                    initial_cypher: "MATCH (n) RETURN *"
+                    initial_cypher: "MATCH o=(:Organisation)-[:RUNS]->(:DataProductService)-[:BASED_ON]->(:UnderlyingDataset) RETURN *"
                 };
     
                 viz = new NeoVis.default(config);
@@ -39,8 +58,8 @@
             }
     
             #viz {
-                width: 900px;
-                height: 700px;
+                width: 100%;
+                height: 900px;
                 border: 1px solid lightgray;
                 font: 22pt arial;
             }
