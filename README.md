@@ -11,7 +11,7 @@ This project assumes you already have [Traefik](https://traefik.io/) running on 
 To create a Docker external network called `traefik`:
 
 ```bash
-$ docker network create traefik
+docker network create traefik
 ```
 
 A project like [joesb/docker-portainer-traefik](https://github.com/joesb/docker-portainer-traefik) may be a good way to run a Traefik (and [Portainer](https://www.portainer.io/)) instance on that external network.
@@ -30,13 +30,13 @@ The `Makefile` and `docker.mk` included in this project provide some easy CLI to
 **To start your Docker stack, from the root directory of your cloned repo:**
 
 ```bash
-$ make up
+make up
 ```
 
 **To stop your Docker stack:**
 
 ```bash
-$ make down
+make down
 ```
 
 Once booted, you should have:
@@ -53,7 +53,7 @@ The project comes with several handy make commands.
 Usage:
 
 ```bash
-$ make {command}
+make {command}
 ```
 
 ```bash
