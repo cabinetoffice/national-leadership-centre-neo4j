@@ -349,13 +349,13 @@ type Organisation {
     offset: Int
     orderBy: [_TeamOrdering]
     filter: _TeamFilter
-  ): [Team]
+  ): [Team] @relation(name: "SITS_WITHIN", direction: IN)
   product(
     first: Int
     offset: Int
     orderBy: [_DataProductServiceOrdering]
     filter: _DataProductServiceFilter
-  ): [DataProductService]
+  ): [DataProductService] @relation(name: "RUNS", direction: OUT)
   _id: String
 }
 
