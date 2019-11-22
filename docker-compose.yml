@@ -59,13 +59,13 @@ services:
     ports:
       - 4001:4001
     volumes:
-        - ./api:/app/
+      - ./api:/app/
     environment:
       - NEO4J_URI=bolt://${PROJECT_NAME}_neo4j:${NEO4J_BOLT_PORT_NUMBER}
       - NEO4J_USER=neo4j
       - NEO4J_PASSWORD=${NEO4J_PASSWORD}
       - GRAPHQL_LISTEN_PORT=${GRAPHQL_LISTEN_PORT}
-      - GRAPHQL_URI=http://${PROJECT_NAME}_api:4001/graphql
+      - GRAPHQL_URI=http://${PROJECT_NAME}_api:${GRAPHQL_LISTEN_PORT}/graphql
     labels:
       - 'traefik.backend=api'
       - 'traefik.port=${GRAPHQL_LISTEN_PORT}'
@@ -77,6 +77,26 @@ services:
       - graph
       - traefik
 
+  ui:
+    build: ./ui
+    container_name: "${PROJECT_NAME}_ui"
+    ports:
+      - 3000:3000
+    volumes:
+      - ./ui:/app/
+    environment:
+      - REACT_APP_GRAPHQL_URI=/graphql
+      - PROXY=http://api.${GRAPHQL_LISTEN_PORT}/graphql
+    depends_on:
+      - api
+    networks:
+      - graph
+      - traefik
+    labels:
+      - 'traefik.backend=ui'
+      - 'traefik.port=${UI_LISTEN_PORT}'
+      - 'traefik.frontend.rule=Host:ui.${PROJECT_BASE_URL}'
+      - 'traefik.docker.network=traefik'
 
 volumes:
 # Docker-sync for macOS users
