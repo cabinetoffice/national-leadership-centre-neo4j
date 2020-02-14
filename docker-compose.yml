@@ -23,25 +23,47 @@ services:
       # NEO4J_HTTP_PORT_NUMBER: $NEO4J_HTTP_PORT_NUMBER
       # NEO4J_HTTPS_PORT_NUMBER: $NEO4J_HTTPS_PORT_NUMBER
     networks:
-      - neo4j-network
       - graph
       - traefik
     labels:
       - 'traefik.backend=neo4j'
       - 'traefik.port=$NEO4J_HTTP_PORT_NUMBER'
-      - 'traefik.frontend.rule=Host:${PROJECT_BASE_URL}'
+      - 'traefik.frontend.rule=Host:graph.${PROJECT_BASE_URL}'
       - 'traefik.docker.network=traefik'
+
+  php:
+    image: wodby/php:$PHP_TAG
+    container_name: "${PROJECT_NAME}_php"
+    environment:
+      # See all available PHP variables at https://github.com/wodby/drupal-php.
+      PHP_SENDMAIL_PATH: /usr/sbin/sendmail -t -i -S mailhog:1025
+      PHP_TIMEZONE: Europe/London
+      PHP_IDE_CONFIG: "serverName=drupal"       # Needed for xdebug for drush commands.
+#      PHP_XDEBUG: 1
+#      PHP_XDEBUG_DEFAULT_ENABLE: 1
+#      PHP_XDEBUG_REMOTE_CONNECT_BACK: 1         # This is needed to respect remote.host setting bellow
+#      PHP_XDEBUG_REMOTE_HOST: host.docker.internal # Docker 18.03+ Mac/Win
+      PHP_FPM_USER: wodby
+      PHP_FPM_GROUP: wodby
+    volumes:
+      # - ./:/var/www/html
+      # For macOS users (https://wodby.com/stacks/drupal/docs/local/docker-for-mac/)
+      - ./web/:/var/www/html:cached # User-guided caching
+      # - docker-sync:/var/www/html # Docker-sync
+    networks:
+      - graph
 
   nginx:
     image: wodby/nginx:$NGINX_TAG
     container_name: "${PROJECT_NAME}_nginx"
     environment:
-      NGINX_VHOST_PRESET: html
-      NGINX_INDEX_FILE: index.html
+      NGINX_STATIC_OPEN_FILE_CACHE: "off"
+      NGINX_BACKEND_HOST: php
+      NGINX_VHOST_PRESET: php
       NGINX_ERROR_LOG_LEVEL: debug
       NGINX_SERVER_ROOT: "${NGINX_SERVER_ROOT}"
     volumes:
-      - ./:/var/www/html:cached
+      - ./web:/var/www/html:cached
     labels:
       - 'traefik.backend=nginx'
       - 'traefik.port=$PUBLIC_PORT'
@@ -87,7 +109,5 @@ volumes:
    
 networks:
   traefik:
-    external: true
-  neo4j-network:
     external: true
   graph:
