@@ -12,19 +12,39 @@ directive @MutationMeta(
   to: String
 ) on FIELD_DEFINITION
 directive @neo4j_ignore on FIELD_DEFINITION
-type _AddOrganisationProductPayload {
+type _AddOrganisationAreaServedPayload {
   from: Organisation
-  to: DataProductService
+  to: AdministrativeArea
 }
 
-type _AddOrganisationTeamPayload {
-  from: Team
+type _AddOrganisationEmployeePayload {
+  from: Organisation
+  to: Person
+}
+
+type _AddOrganisationRoleAdditionalTypePayload {
+  from: OrganisationRole
+  to: OrganisationRole
+}
+
+type _AddOrganisationSectorPayload {
+  from: Organisation
+  to: Sector
+}
+
+type _AddPersonJobTitlePayload {
+  from: Person
+  to: OrganisationRole
+}
+
+type _AddPersonWorksForPayload {
+  from: Person
   to: Organisation
 }
 
-input _DataProductServiceFilter {
-  AND: [_DataProductServiceFilter!]
-  OR: [_DataProductServiceFilter!]
+input _AdministrativeAreaFilter {
+  AND: [_AdministrativeAreaFilter!]
+  OR: [_AdministrativeAreaFilter!]
   id: Int
   id_not: Int
   id_in: [Int!]
@@ -33,51 +53,27 @@ input _DataProductServiceFilter {
   id_lte: Int
   id_gt: Int
   id_gte: Int
-  name: String
-  name_not: String
-  name_in: [String!]
-  name_not_in: [String!]
-  name_contains: String
-  name_not_contains: String
-  name_starts_with: String
-  name_not_starts_with: String
-  name_ends_with: String
-  name_not_ends_with: String
-  contact: String
-  contact_not: String
-  contact_in: [String!]
-  contact_not_in: [String!]
-  contact_contains: String
-  contact_not_contains: String
-  contact_starts_with: String
-  contact_not_starts_with: String
-  contact_ends_with: String
-  contact_not_ends_with: String
-  technical_report: String
-  technical_report_not: String
-  technical_report_in: [String!]
-  technical_report_not_in: [String!]
-  technical_report_contains: String
-  technical_report_not_contains: String
-  technical_report_starts_with: String
-  technical_report_not_starts_with: String
-  technical_report_ends_with: String
-  technical_report_not_ends_with: String
+  label: String
+  label_not: String
+  label_in: [String!]
+  label_not_in: [String!]
+  label_contains: String
+  label_not_contains: String
+  label_starts_with: String
+  label_not_starts_with: String
+  label_ends_with: String
+  label_not_ends_with: String
 }
 
-input _DataProductServiceInput {
+input _AdministrativeAreaInput {
   id: Int!
 }
 
-enum _DataProductServiceOrdering {
+enum _AdministrativeAreaOrdering {
   id_asc
   id_desc
-  name_asc
-  name_desc
-  contact_asc
-  contact_desc
-  technical_report_asc
-  technical_report_desc
+  label_asc
+  label_desc
   _id_asc
   _id_desc
 }
@@ -203,32 +199,16 @@ input _OrganisationFilter {
   id_lte: Int
   id_gt: Int
   id_gte: Int
-  name: String
-  name_not: String
-  name_in: [String!]
-  name_not_in: [String!]
-  name_contains: String
-  name_not_contains: String
-  name_starts_with: String
-  name_not_starts_with: String
-  name_ends_with: String
-  name_not_ends_with: String
-  team: _TeamFilter
-  team_not: _TeamFilter
-  team_in: [_TeamFilter!]
-  team_not_in: [_TeamFilter!]
-  team_some: _TeamFilter
-  team_none: _TeamFilter
-  team_single: _TeamFilter
-  team_every: _TeamFilter
-  product: _DataProductServiceFilter
-  product_not: _DataProductServiceFilter
-  product_in: [_DataProductServiceFilter!]
-  product_not_in: [_DataProductServiceFilter!]
-  product_some: _DataProductServiceFilter
-  product_none: _DataProductServiceFilter
-  product_single: _DataProductServiceFilter
-  product_every: _DataProductServiceFilter
+  label: String
+  label_not: String
+  label_in: [String!]
+  label_not_in: [String!]
+  label_contains: String
+  label_not_contains: String
+  label_starts_with: String
+  label_not_starts_with: String
+  label_ends_with: String
+  label_not_ends_with: String
 }
 
 input _OrganisationInput {
@@ -238,30 +218,15 @@ input _OrganisationInput {
 enum _OrganisationOrdering {
   id_asc
   id_desc
-  name_asc
-  name_desc
+  label_asc
+  label_desc
   _id_asc
   _id_desc
 }
 
-enum _RelationDirections {
-  IN
-  OUT
-}
-
-type _RemoveOrganisationProductPayload {
-  from: Organisation
-  to: DataProductService
-}
-
-type _RemoveOrganisationTeamPayload {
-  from: Team
-  to: Organisation
-}
-
-input _TeamFilter {
-  AND: [_TeamFilter!]
-  OR: [_TeamFilter!]
+input _OrganisationRoleFilter {
+  AND: [_OrganisationRoleFilter!]
+  OR: [_OrganisationRoleFilter!]
   id: Int
   id_not: Int
   id_in: [Int!]
@@ -280,139 +245,395 @@ input _TeamFilter {
   name_not_starts_with: String
   name_ends_with: String
   name_not_ends_with: String
+  roleName: String
+  roleName_not: String
+  roleName_in: [String!]
+  roleName_not_in: [String!]
+  roleName_contains: String
+  roleName_not_contains: String
+  roleName_starts_with: String
+  roleName_not_starts_with: String
+  roleName_ends_with: String
+  roleName_not_ends_with: String
+  type: String
+  type_not: String
+  type_in: [String!]
+  type_not_in: [String!]
+  type_contains: String
+  type_not_contains: String
+  type_starts_with: String
+  type_not_starts_with: String
+  type_ends_with: String
+  type_not_ends_with: String
 }
 
-input _TeamInput {
+input _OrganisationRoleInput {
   id: Int!
 }
 
-enum _TeamOrdering {
+enum _OrganisationRoleOrdering {
   id_asc
   id_desc
   name_asc
   name_desc
+  roleName_asc
+  roleName_desc
+  type_asc
+  type_desc
   _id_asc
   _id_desc
 }
 
-type DataProductService {
+input _PersonFilter {
+  AND: [_PersonFilter!]
+  OR: [_PersonFilter!]
+  id: String
+  id_not: String
+  id_in: [String!]
+  id_not_in: [String!]
+  id_contains: String
+  id_not_contains: String
+  id_starts_with: String
+  id_not_starts_with: String
+  id_ends_with: String
+  id_not_ends_with: String
+  label: String
+  label_not: String
+  label_in: [String!]
+  label_not_in: [String!]
+  label_contains: String
+  label_not_contains: String
+  label_starts_with: String
+  label_not_starts_with: String
+  label_ends_with: String
+  label_not_ends_with: String
+  title: String
+  title_not: String
+  title_in: [String!]
+  title_not_in: [String!]
+  title_contains: String
+  title_not_contains: String
+  title_starts_with: String
+  title_not_starts_with: String
+  title_ends_with: String
+  title_not_ends_with: String
+  firstName: String
+  firstName_not: String
+  firstName_in: [String!]
+  firstName_not_in: [String!]
+  firstName_contains: String
+  firstName_not_contains: String
+  firstName_starts_with: String
+  firstName_not_starts_with: String
+  firstName_ends_with: String
+  firstName_not_ends_with: String
+  lastName: String
+  lastName_not: String
+  lastName_in: [String!]
+  lastName_not_in: [String!]
+  lastName_contains: String
+  lastName_not_contains: String
+  lastName_starts_with: String
+  lastName_not_starts_with: String
+  lastName_ends_with: String
+  lastName_not_ends_with: String
+  fullName: String
+  fullName_not: String
+  fullName_in: [String!]
+  fullName_not_in: [String!]
+  fullName_contains: String
+  fullName_not_contains: String
+  fullName_starts_with: String
+  fullName_not_starts_with: String
+  fullName_ends_with: String
+  fullName_not_ends_with: String
+}
+
+input _PersonInput {
+  id: String!
+}
+
+enum _PersonOrdering {
+  id_asc
+  id_desc
+  label_asc
+  label_desc
+  title_asc
+  title_desc
+  firstName_asc
+  firstName_desc
+  lastName_asc
+  lastName_desc
+  fullName_asc
+  fullName_desc
+  _id_asc
+  _id_desc
+}
+
+enum _RelationDirections {
+  IN
+  OUT
+}
+
+type _RemoveOrganisationAreaServedPayload {
+  from: Organisation
+  to: AdministrativeArea
+}
+
+type _RemoveOrganisationEmployeePayload {
+  from: Organisation
+  to: Person
+}
+
+type _RemoveOrganisationRoleAdditionalTypePayload {
+  from: OrganisationRole
+  to: OrganisationRole
+}
+
+type _RemoveOrganisationSectorPayload {
+  from: Organisation
+  to: Sector
+}
+
+type _RemovePersonJobTitlePayload {
+  from: Person
+  to: OrganisationRole
+}
+
+type _RemovePersonWorksForPayload {
+  from: Person
+  to: Organisation
+}
+
+input _SectorFilter {
+  AND: [_SectorFilter!]
+  OR: [_SectorFilter!]
+  id: Int
+  id_not: Int
+  id_in: [Int!]
+  id_not_in: [Int!]
+  id_lt: Int
+  id_lte: Int
+  id_gt: Int
+  id_gte: Int
+  label: String
+  label_not: String
+  label_in: [String!]
+  label_not_in: [String!]
+  label_contains: String
+  label_not_contains: String
+  label_starts_with: String
+  label_not_starts_with: String
+  label_ends_with: String
+  label_not_ends_with: String
+}
+
+input _SectorInput {
   id: Int!
-  name: String
-  contact: String
-  technical_report: String
-  _id: String
+}
+
+enum _SectorOrdering {
+  id_asc
+  id_desc
+  label_asc
+  label_desc
+  _id_asc
+  _id_desc
 }
 
 type Mutation {
-  CreateOrganisation(id: Int!, name: String): Organisation
-  UpdateOrganisation(id: Int!, name: String): Organisation
+  CreateOrganisation(id: Int, label: String): Organisation
+  UpdateOrganisation(id: Int!, label: String): Organisation
   DeleteOrganisation(id: Int!): Organisation
-  AddOrganisationTeam(
-    from: _TeamInput!
-    to: _OrganisationInput!
-  ): _AddOrganisationTeamPayload
-  RemoveOrganisationTeam(
-    from: _TeamInput!
-    to: _OrganisationInput!
-  ): _RemoveOrganisationTeamPayload
-  AddOrganisationProduct(
+  CreatePerson(
+    id: String
+    label: String
+    title: String
+    firstName: String
+    lastName: String
+    fullName: String
+  ): Person
+  UpdatePerson(
+    id: String!
+    label: String
+    title: String
+    firstName: String
+    lastName: String
+    fullName: String
+  ): Person
+  DeletePerson(id: String!): Person
+  AddOrganisationEmployee(
     from: _OrganisationInput!
-    to: _DataProductServiceInput!
-  ): _AddOrganisationProductPayload
-  RemoveOrganisationProduct(
+    to: _PersonInput!
+  ): _AddOrganisationEmployeePayload
+  RemoveOrganisationEmployee(
     from: _OrganisationInput!
-    to: _DataProductServiceInput!
-  ): _RemoveOrganisationProductPayload
-  CreateTeam(id: Int!, name: String): Team
-  UpdateTeam(id: Int!, name: String): Team
-  DeleteTeam(id: Int!): Team
-  CreateDataProductService(
+    to: _PersonInput!
+  ): _RemoveOrganisationEmployeePayload
+  AddPersonWorksFor(
+    from: _PersonInput!
+    to: _OrganisationInput!
+  ): _AddPersonWorksForPayload
+  RemovePersonWorksFor(
+    from: _PersonInput!
+    to: _OrganisationInput!
+  ): _RemovePersonWorksForPayload
+  AddPersonJobTitle(
+    from: _PersonInput!
+    to: _OrganisationRoleInput!
+  ): _AddPersonJobTitlePayload
+  RemovePersonJobTitle(
+    from: _PersonInput!
+    to: _OrganisationRoleInput!
+  ): _RemovePersonJobTitlePayload
+  CreateOrganisationRole(
+    id: Int
+    name: String
+    roleName: String
+    type: String
+  ): OrganisationRole
+  UpdateOrganisationRole(
     id: Int!
     name: String
-    contact: String
-    technical_report: String
-  ): DataProductService
-  UpdateDataProductService(
-    id: Int!
-    name: String
-    contact: String
-    technical_report: String
-  ): DataProductService
-  DeleteDataProductService(id: Int!): DataProductService
+    roleName: String
+    type: String
+  ): OrganisationRole
+  DeleteOrganisationRole(id: Int!): OrganisationRole
+  AddOrganisationRoleAdditionalType(
+    from: _OrganisationRoleInput!
+    to: _OrganisationRoleInput!
+  ): _AddOrganisationRoleAdditionalTypePayload
+  RemoveOrganisationRoleAdditionalType(
+    from: _OrganisationRoleInput!
+    to: _OrganisationRoleInput!
+  ): _RemoveOrganisationRoleAdditionalTypePayload
+  AddOrganisationAreaServed(
+    from: _OrganisationInput!
+    to: _AdministrativeAreaInput!
+  ): _AddOrganisationAreaServedPayload
+  RemoveOrganisationAreaServed(
+    from: _OrganisationInput!
+    to: _AdministrativeAreaInput!
+  ): _RemoveOrganisationAreaServedPayload
+  AddOrganisationSector(
+    from: _OrganisationInput!
+    to: _SectorInput!
+  ): _AddOrganisationSectorPayload
+  RemoveOrganisationSector(
+    from: _OrganisationInput!
+    to: _SectorInput!
+  ): _RemoveOrganisationSectorPayload
+  CreateAdministrativeArea(id: Int, label: String): AdministrativeArea
+  UpdateAdministrativeArea(id: Int!, label: String): AdministrativeArea
+  DeleteAdministrativeArea(id: Int!): AdministrativeArea
+  CreateSector(id: Int, label: String): Sector
+  UpdateSector(id: Int!, label: String): Sector
+  DeleteSector(id: Int!): Sector
 }
 
 type Organisation {
-  id: Int!
+  id: Int
+  label: String
+  _id: String
+  employee(
+    first: Int
+    offset: Int
+    orderBy: [_PersonOrdering]
+    filter: _PersonFilter
+  ): [Person] @relation(name: "employee", direction: OUT)
+  areaServed(
+    first: Int
+    offset: Int
+    orderBy: [_AdministrativeAreaOrdering]
+    filter: _AdministrativeAreaFilter
+  ): [AdministrativeArea] @relation(name: "areaServed", direction: OUT)
+  sector(
+    first: Int
+    offset: Int
+    orderBy: [_SectorOrdering]
+    filter: _SectorFilter
+  ): [Sector] @relation(name: "hasSector", direction: OUT)
+}
+
+type OrganisationRole {
+  id: Int
   name: String
-  team(
+  roleName: String
+  type: String
+  additionalType(
     first: Int
     offset: Int
-    orderBy: [_TeamOrdering]
-    filter: _TeamFilter
-  ): [Team] @relation(name: "SITS_WITHIN", direction: IN)
-  product(
+    orderBy: [_OrganisationRoleOrdering]
+    filter: _OrganisationRoleFilter
+  ): [OrganisationRole] @relation(name: "typeOf", direction: OUT)
+}
+
+type Person {
+  id: String
+  label: String
+  title: String
+  firstName: String
+  lastName: String
+  fullName: String
+  worksFor(
     first: Int
     offset: Int
-    orderBy: [_DataProductServiceOrdering]
-    filter: _DataProductServiceFilter
-  ): [DataProductService] @relation(name: "RUNS", direction: OUT)
+    orderBy: [_OrganisationOrdering]
+    filter: _OrganisationFilter
+  ): [Organisation] @relation(name: "worksFor", direction: OUT)
+  jobTitle(
+    first: Int
+    offset: Int
+    orderBy: [_OrganisationRoleOrdering]
+    filter: _OrganisationRoleFilter
+  ): [OrganisationRole] @relation(name: "hasOccupation", direction: OUT)
+}
+
+type AdministrativeArea {
+  id: Int
+  label: String
+  _id: String
+}
+
+type Sector {
+  id: Int
+  label: String
   _id: String
 }
 
 type Query {
   Organisation(
     id: Int
-    name: String
+    label: String
     _id: String
     first: Int
     offset: Int
     orderBy: [_OrganisationOrdering]
     filter: _OrganisationFilter
   ): [Organisation]
-  Team(
-    id: Int
-    name: String
+  Person(
+    id: String
+    label: String
+    title: String
+    firstName: String
+    lastName: String
+    fullName: String
     _id: String
     first: Int
     offset: Int
-    orderBy: [_TeamOrdering]
-    filter: _TeamFilter
-  ): [Team]
-  DataProductService(
+    orderBy: [_PersonOrdering]
+    filter: _PersonFilter
+  ): [Person]
+  OrganisationRole(
     id: Int
     name: String
-    contact: String
-    technical_report: String
+    roleName: String
+    type: String
     _id: String
     first: Int
     offset: Int
-    orderBy: [_DataProductServiceOrdering]
-    filter: _DataProductServiceFilter
-  ): [DataProductService]
+    orderBy: [_OrganisationRoleOrdering]
+    filter: _OrganisationRoleFilter
+  ): [OrganisationRole]
 }
 
-type Team {
-  id: Int!
-  name: String
-  _id: String
-}
-
-
-# type Organisation {
-#   id: Int!
-#   name: String
-#   team: [Team] @relation(name: "SITS_WITHIN", direction: IN)
-#   product: [DataProductService] @relation(name: "RUNS", direction: OUT)
-# }
-
-# type Team {
-#   id: Int!
-#   name: String
-# }
-
-# type DataProductService {
-#   id: Int!
-#   name: String
-#   contact: String
-#   technical_report: String
-# }

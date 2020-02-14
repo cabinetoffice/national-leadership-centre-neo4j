@@ -1,0 +1,418 @@
+directive @cypher(statement: String) on FIELD_DEFINITION
+directive @relation(
+  name: String
+  direction: _RelationDirections
+  from: String
+  to: String
+) on FIELD_DEFINITION | OBJECT
+directive @additionalLabels(labels: [String]) on OBJECT
+directive @MutationMeta(
+  relationship: String
+  from: String
+  to: String
+) on FIELD_DEFINITION
+directive @neo4j_ignore on FIELD_DEFINITION
+type _AddOrganisationProductPayload {
+  from: Organisation
+  to: DataProductService
+}
+
+type _AddOrganisationTeamPayload {
+  from: Team
+  to: Organisation
+}
+
+input _DataProductServiceFilter {
+  AND: [_DataProductServiceFilter!]
+  OR: [_DataProductServiceFilter!]
+  id: Int
+  id_not: Int
+  id_in: [Int!]
+  id_not_in: [Int!]
+  id_lt: Int
+  id_lte: Int
+  id_gt: Int
+  id_gte: Int
+  name: String
+  name_not: String
+  name_in: [String!]
+  name_not_in: [String!]
+  name_contains: String
+  name_not_contains: String
+  name_starts_with: String
+  name_not_starts_with: String
+  name_ends_with: String
+  name_not_ends_with: String
+  contact: String
+  contact_not: String
+  contact_in: [String!]
+  contact_not_in: [String!]
+  contact_contains: String
+  contact_not_contains: String
+  contact_starts_with: String
+  contact_not_starts_with: String
+  contact_ends_with: String
+  contact_not_ends_with: String
+  technical_report: String
+  technical_report_not: String
+  technical_report_in: [String!]
+  technical_report_not_in: [String!]
+  technical_report_contains: String
+  technical_report_not_contains: String
+  technical_report_starts_with: String
+  technical_report_not_starts_with: String
+  technical_report_ends_with: String
+  technical_report_not_ends_with: String
+}
+
+input _DataProductServiceInput {
+  id: Int!
+}
+
+enum _DataProductServiceOrdering {
+  id_asc
+  id_desc
+  name_asc
+  name_desc
+  contact_asc
+  contact_desc
+  technical_report_asc
+  technical_report_desc
+  _id_asc
+  _id_desc
+}
+
+type _Neo4jDate {
+  year: Int
+  month: Int
+  day: Int
+  formatted: String
+}
+
+input _Neo4jDateInput {
+  year: Int
+  month: Int
+  day: Int
+  formatted: String
+}
+
+type _Neo4jDateTime {
+  year: Int
+  month: Int
+  day: Int
+  hour: Int
+  minute: Int
+  second: Int
+  millisecond: Int
+  microsecond: Int
+  nanosecond: Int
+  timezone: String
+  formatted: String
+}
+
+input _Neo4jDateTimeInput {
+  year: Int
+  month: Int
+  day: Int
+  hour: Int
+  minute: Int
+  second: Int
+  millisecond: Int
+  microsecond: Int
+  nanosecond: Int
+  timezone: String
+  formatted: String
+}
+
+type _Neo4jLocalDateTime {
+  year: Int
+  month: Int
+  day: Int
+  hour: Int
+  minute: Int
+  second: Int
+  millisecond: Int
+  microsecond: Int
+  nanosecond: Int
+  formatted: String
+}
+
+input _Neo4jLocalDateTimeInput {
+  year: Int
+  month: Int
+  day: Int
+  hour: Int
+  minute: Int
+  second: Int
+  millisecond: Int
+  microsecond: Int
+  nanosecond: Int
+  formatted: String
+}
+
+type _Neo4jLocalTime {
+  hour: Int
+  minute: Int
+  second: Int
+  millisecond: Int
+  microsecond: Int
+  nanosecond: Int
+  formatted: String
+}
+
+input _Neo4jLocalTimeInput {
+  hour: Int
+  minute: Int
+  second: Int
+  millisecond: Int
+  microsecond: Int
+  nanosecond: Int
+  formatted: String
+}
+
+type _Neo4jTime {
+  hour: Int
+  minute: Int
+  second: Int
+  millisecond: Int
+  microsecond: Int
+  nanosecond: Int
+  timezone: String
+  formatted: String
+}
+
+input _Neo4jTimeInput {
+  hour: Int
+  minute: Int
+  second: Int
+  nanosecond: Int
+  millisecond: Int
+  microsecond: Int
+  timezone: String
+  formatted: String
+}
+
+input _OrganisationFilter {
+  AND: [_OrganisationFilter!]
+  OR: [_OrganisationFilter!]
+  id: Int
+  id_not: Int
+  id_in: [Int!]
+  id_not_in: [Int!]
+  id_lt: Int
+  id_lte: Int
+  id_gt: Int
+  id_gte: Int
+  name: String
+  name_not: String
+  name_in: [String!]
+  name_not_in: [String!]
+  name_contains: String
+  name_not_contains: String
+  name_starts_with: String
+  name_not_starts_with: String
+  name_ends_with: String
+  name_not_ends_with: String
+  team: _TeamFilter
+  team_not: _TeamFilter
+  team_in: [_TeamFilter!]
+  team_not_in: [_TeamFilter!]
+  team_some: _TeamFilter
+  team_none: _TeamFilter
+  team_single: _TeamFilter
+  team_every: _TeamFilter
+  product: _DataProductServiceFilter
+  product_not: _DataProductServiceFilter
+  product_in: [_DataProductServiceFilter!]
+  product_not_in: [_DataProductServiceFilter!]
+  product_some: _DataProductServiceFilter
+  product_none: _DataProductServiceFilter
+  product_single: _DataProductServiceFilter
+  product_every: _DataProductServiceFilter
+}
+
+input _OrganisationInput {
+  id: Int!
+}
+
+enum _OrganisationOrdering {
+  id_asc
+  id_desc
+  name_asc
+  name_desc
+  _id_asc
+  _id_desc
+}
+
+enum _RelationDirections {
+  IN
+  OUT
+}
+
+type _RemoveOrganisationProductPayload {
+  from: Organisation
+  to: DataProductService
+}
+
+type _RemoveOrganisationTeamPayload {
+  from: Team
+  to: Organisation
+}
+
+input _TeamFilter {
+  AND: [_TeamFilter!]
+  OR: [_TeamFilter!]
+  id: Int
+  id_not: Int
+  id_in: [Int!]
+  id_not_in: [Int!]
+  id_lt: Int
+  id_lte: Int
+  id_gt: Int
+  id_gte: Int
+  name: String
+  name_not: String
+  name_in: [String!]
+  name_not_in: [String!]
+  name_contains: String
+  name_not_contains: String
+  name_starts_with: String
+  name_not_starts_with: String
+  name_ends_with: String
+  name_not_ends_with: String
+}
+
+input _TeamInput {
+  id: Int!
+}
+
+enum _TeamOrdering {
+  id_asc
+  id_desc
+  name_asc
+  name_desc
+  _id_asc
+  _id_desc
+}
+
+type DataProductService {
+  id: Int!
+  name: String
+  contact: String
+  technical_report: String
+  _id: String
+}
+
+type Mutation {
+  CreateOrganisation(id: Int!, name: String): Organisation
+  UpdateOrganisation(id: Int!, name: String): Organisation
+  DeleteOrganisation(id: Int!): Organisation
+  AddOrganisationTeam(
+    from: _TeamInput!
+    to: _OrganisationInput!
+  ): _AddOrganisationTeamPayload
+  RemoveOrganisationTeam(
+    from: _TeamInput!
+    to: _OrganisationInput!
+  ): _RemoveOrganisationTeamPayload
+  AddOrganisationProduct(
+    from: _OrganisationInput!
+    to: _DataProductServiceInput!
+  ): _AddOrganisationProductPayload
+  RemoveOrganisationProduct(
+    from: _OrganisationInput!
+    to: _DataProductServiceInput!
+  ): _RemoveOrganisationProductPayload
+  CreateTeam(id: Int!, name: String): Team
+  UpdateTeam(id: Int!, name: String): Team
+  DeleteTeam(id: Int!): Team
+  CreateDataProductService(
+    id: Int!
+    name: String
+    contact: String
+    technical_report: String
+  ): DataProductService
+  UpdateDataProductService(
+    id: Int!
+    name: String
+    contact: String
+    technical_report: String
+  ): DataProductService
+  DeleteDataProductService(id: Int!): DataProductService
+}
+
+type Organisation {
+  id: Int!
+  name: String
+  team(
+    first: Int
+    offset: Int
+    orderBy: [_TeamOrdering]
+    filter: _TeamFilter
+  ): [Team] @relation(name: "SITS_WITHIN", direction: IN)
+  product(
+    first: Int
+    offset: Int
+    orderBy: [_DataProductServiceOrdering]
+    filter: _DataProductServiceFilter
+  ): [DataProductService] @relation(name: "RUNS", direction: OUT)
+  _id: String
+}
+
+type Query {
+  Organisation(
+    id: Int
+    name: String
+    _id: String
+    first: Int
+    offset: Int
+    orderBy: [_OrganisationOrdering]
+    filter: _OrganisationFilter
+  ): [Organisation]
+  Team(
+    id: Int
+    name: String
+    _id: String
+    first: Int
+    offset: Int
+    orderBy: [_TeamOrdering]
+    filter: _TeamFilter
+  ): [Team]
+  DataProductService(
+    id: Int
+    name: String
+    contact: String
+    technical_report: String
+    _id: String
+    first: Int
+    offset: Int
+    orderBy: [_DataProductServiceOrdering]
+    filter: _DataProductServiceFilter
+  ): [DataProductService]
+}
+
+type Team {
+  id: Int!
+  name: String
+  _id: String
+}
+
+
+# type Organisation {
+#   id: Int!
+#   name: String
+#   team: [Team] @relation(name: "SITS_WITHIN", direction: IN)
+#   product: [DataProductService] @relation(name: "RUNS", direction: OUT)
+# }
+
+# type Team {
+#   id: Int!
+#   name: String
+# }
+
+# type DataProductService {
+#   id: Int!
+#   name: String
+#   contact: String
+#   technical_report: String
+# }
